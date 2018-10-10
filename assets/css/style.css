@@ -1,7 +1,8 @@
 h1 {
-    background: orangered;
+    background: rgb(255, 102, 0);
     float: left;
     margin-top: 0;
+    color: #eee;
     /*below is not working */
     /* margin: 40px, 0px, 40px, 0px;  */
     /* padding: 40px, 0px, 40px, 0px; */
@@ -30,11 +31,12 @@ div.row {
 #gems>img {
     /* clear: both; */
     float: left;
-    height: 50px;
-    width: 50px;
+    height: 75px;
+    width: 75px;
 }
 
-h3 {
+h3,
+#score {
     background-color: deepskyblue;
     color: #eee;
 }
