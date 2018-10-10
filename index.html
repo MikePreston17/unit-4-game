@@ -1,38 +1,42 @@
+<!--	Author: Michael Preston	-->
+<!--	Date: "10-09-2018"	-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Crystal Collector</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script> -->
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <script src="assets/javascript/game.js"></script>
+
+
 
 </head>
 
 <body>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h1>Crystal Collector!</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <!-- Info text -->
             <span id="info">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio blanditiis pariatur fugiat ipsum
@@ -43,30 +47,34 @@
     </div>
 
     <div class="row">
-        <span id="goal"></span>
-        <span id="win-loss"></span>
-    </div>
-
-    <div class="row">
-        <span id="gems">
-            <!-- holds gem graphics (rupees?) -->
-            <img src="assets/images/ruby.jpeg" alt="ruby">
-            <img src="assets/images/sapphire.jpeg" alt="sapphire">
-            <img src="assets/images/topaz.jpeg" alt="topaz">
-            <img src="assets/images/emerald.jpeg" alt="garnet">
-        </span>
-
-    </div>
-
-    <div class="row">
         <div class="col-md-6">
-            <h3>Your total score is: </h3>
-            <span id="score">
-                <!-- holds scorecard -->
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic rerum quam, illum eaque, iusto quisquam
-                expedita reiciendis et commodi necessitatibus aliquid placeat impedit, quas culpa neque fugiat velit
-                quaerat? Temporibus?
+            <!-- holds wins and losses -->
+            <strong>
+                <h2 id='goal'></h2>
+            </strong>
+            <span id="win-loss"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <span id="gems">
+                <!-- holds gem graphics (rupees?) -->
+                <img class="gem" src="assets/images/ruby.jpeg" alt="ruby">
+                <img class="gem" src="assets/images/sapphire.jpeg" alt="sapphire">
+                <img class="gem" src="assets/images/topaz.jpeg" alt="topaz">
+                <img class="gem" src="assets/images/emerald.jpeg" alt="emerald">
             </span>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <!-- holds scorecard -->
+            <h3>Your total score is: </h3>
+            <span id="score"></span>
         </div>
     </div>
 

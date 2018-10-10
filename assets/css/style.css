@@ -25,14 +25,19 @@ div.row {
 }
 
 #goal {
-    background-color: rgb(120, 202, 120)
+    background-color: rgb(120, 202, 120);
+    color: purple;
+    font-size: 24;
 }
 
-#gems>img {
-    /* clear: both; */
+img.gem {
     float: left;
-    height: 75px;
-    width: 75px;
+    height: 80px;
+    width: 80px;
+}
+
+h2 {
+    max-width: 200px;
 }
 
 h3,
