@@ -45,3 +45,11 @@ h3,
     background-color: deepskyblue;
     color: #eee;
 }
+
+#win-loss {
+    /* clear: both; */
+    float: left;
+    background-color: deepskyblue;
+    color: #eee;
+    max-width: 150px;
+}
