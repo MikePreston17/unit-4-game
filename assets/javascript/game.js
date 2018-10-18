@@ -78,29 +78,36 @@ function render() {
 const min = 1;
 const max = 12;
 
-var values = range(1, 12);
 
 function generateDictionary() {
 
     if (!goal || goal == 0) setGoal();
-
-    var result = Object.keys(gemDictionary);
-
     // console.log('goal: ', goal);
 
-    //todo: make the min and max BELOW and never adding up to the cpuGuess.
-    var selected = [];
+    var values = range(1, 12);
+    var result = Object.keys(gemDictionary);
 
-    result.forEach(key => {
-        let poppedIndex = randomInt(0, values.length - 1);
-        selected.push(values[poppedIndex]);
-        gemDictionary[key] = values[poppedIndex];
-        values.splice(poppedIndex, 1);
-        // console.log('values: ', values);
-    })
+    do {
+        var selected = [];
 
-    console.log('adds up? ', addsUpTo(selected, goal));
-    // console.log(gemDictionary);
+        result.forEach(key => {
+            let poppedIndex = randomInt(0, values.length - 1);
+            selected.push(values[poppedIndex]);
+            console.log('idx: ', poppedIndex);
+            gemDictionary[key] = values[poppedIndex];
+            values.splice(poppedIndex, 1);
+            console.log('values: ', values);
+        })
+        // alert('pause!')
+        console.log('selected: ', selected);
+        if (selected[0] === undefined) {
+            console.log('bad dict?', gemDictionary);
+            alert('pause!')
+        }
+    }
+    while (!addsUpTo(selected.sort((a, b) => b - a), goal))
+
+    console.log(gemDictionary);
 }
 
 function range(start, end) {
@@ -110,20 +117,25 @@ function range(start, end) {
 //performs greedy algorithm
 function addsUpTo(values, goal) {
 
-    console.log('addup values: ', values);
+    // console.log('addup values: ', values);
     if (goal === 0)
         return true;
 
-    var max = Math.max(values)
+    var max = Math.max(...values);
+    // console.log('max: ', max);
+
     var results = [];
-    console.log('max: ', max);
 
-    if (goal - max > 0) {
-        goal -= max;
-        results.push(max);
-    }
+    values.forEach(number => {
+        let times = Math.floor(goal / number);
+        // console.log(`${number}  divides into: ${goal} ${times} times`);
+        goal -= times * number;
+        results.push(number);
+        // console.log('step-goal: ', goal);
 
-    console.log('results: ', results);
-    //while goal > 0, subtract the largest number from goal iff the new result would still be > 0.  (Optional: Push that number to the result array.)
-    //When a number can no longer reduce the goal, pop it from the original array
+    });
+
+    // console.log('results: ', results);
+    // console.log('goal: ', goal);
+    return goal === 0;
 }
