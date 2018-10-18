@@ -1,8 +1,11 @@
 /*	Author: Michael Preston
  *	Date: "10-09-2018"
  */
+
 const MIN_GOAL = 19,
     MAX_GOAL = 120;
+const MIN_POINTS = 1,
+    MAX_POINTS = 12;
 var goal, totalScore, wins, losses;
 var gemDictionary = {
     ruby: 0,
@@ -13,9 +16,12 @@ var gemDictionary = {
 
 window.addEventListener('load', init)
 
-$(document).on("click", ".gem", function () {
-    var that = this; //in case 'this' changes by jQuery (best practices)
+/**
+ * Events
+ */
 
+$(document).on("click", ".gem", function () {
+    var that = this; //added 'that' just in case 'this' changes by jQuery (best practices)
     let score = gemDictionary[that.alt];
 
     if (typeof score !== 'number') {
@@ -26,6 +32,10 @@ $(document).on("click", ".gem", function () {
     render()
     checkWinCondition()
 })
+
+/**
+ * Game Logic
+ */
 
 function checkWinCondition() {
     if (totalScore < goal)
@@ -43,48 +53,23 @@ function checkWinCondition() {
 }
 
 function init() {
-    generateDictionary();
+    generateGems();
     totalScore = 0;
     losses = 0;
     wins = 0;
     render();
 }
 
-
 function setGoal() {
-    // console.log('setGoal()', );
     goal = randomInt(MIN_GOAL, MAX_GOAL, true);
     $('#goal').text(goal);
 }
 
-function reset() {
-    totalScore = 0;
-    setGoal();
-    generateDictionary();
-}
-
-function randomInt(min, max, inclusive) {
-    return Math.floor(Math.random() * (max - min + (inclusive ? 1 : 0))) + min
-}
-
-function render() {
-    $('#score').text(totalScore);
-    $('#win-loss').text(`Wins: ${wins}\nLosses:${losses}`);
-}
-
-//Sample:  1-3, 5-7, 10-12
-//TODO: Use the greedy alg to ensure some array of values CAN add up to the GOAL
-
-const min = 1;
-const max = 12;
-
-
-function generateDictionary() {
+function generateGems() {
 
     if (!goal || goal == 0) setGoal();
-    // console.log('goal: ', goal);
 
-    var values = range(1, 12);
+    var values = range(MIN_POINTS, MAX_POINTS);
     var result = Object.keys(gemDictionary);
 
     do {
@@ -93,49 +78,49 @@ function generateDictionary() {
         result.forEach(key => {
             let poppedIndex = randomInt(0, values.length - 1);
             selected.push(values[poppedIndex]);
-            console.log('idx: ', poppedIndex);
             gemDictionary[key] = values[poppedIndex];
             values.splice(poppedIndex, 1);
-            console.log('values: ', values);
         })
-        // alert('pause!')
-        console.log('selected: ', selected);
-        if (selected[0] === undefined) {
-            console.log('bad dict?', gemDictionary);
-            alert('pause!')
-        }
     }
     while (!addsUpTo(selected.sort((a, b) => b - a), goal))
+}
 
-    console.log(gemDictionary);
+function reset() {
+    totalScore = 0;
+    setGoal();
+    generateGems();
+}
+
+//Uses the greedy alg to ensure some array of values CAN add up to the GOAL
+function addsUpTo(values, goal) {
+
+    if (values.reduce(sum) === goal) return true;
+
+    values.forEach(number => {
+        let times = Math.floor(goal / number);
+        goal -= times * number;
+    });
+
+    return goal === 0;
+}
+
+function render() {
+    $('#score').text(totalScore);
+    $('#win-loss').text(`Wins: ${wins}\nLosses:${losses}`);
+}
+
+/**
+ * Helper functions 
+ */
+
+function randomInt(min, max, inclusive) {
+    return Math.floor(Math.random() * (max - min + (inclusive ? 1 : 0))) + min
 }
 
 function range(start, end) {
     return [...Array(1 + end - start).keys()].map(v => start + v)
 }
 
-//performs greedy algorithm
-function addsUpTo(values, goal) {
-
-    // console.log('addup values: ', values);
-    if (goal === 0)
-        return true;
-
-    var max = Math.max(...values);
-    // console.log('max: ', max);
-
-    var results = [];
-
-    values.forEach(number => {
-        let times = Math.floor(goal / number);
-        // console.log(`${number}  divides into: ${goal} ${times} times`);
-        goal -= times * number;
-        results.push(number);
-        // console.log('step-goal: ', goal);
-
-    });
-
-    // console.log('results: ', results);
-    // console.log('goal: ', goal);
-    return goal === 0;
+function sum(total, num) {
+    return total + num;
 }
