@@ -89,6 +89,7 @@ function reset() {
     totalScore = 0;
     setGoal();
     generateGems();
+    render();
 }
 
 //Uses the greedy alg to ensure some array of values CAN add up to the GOAL
