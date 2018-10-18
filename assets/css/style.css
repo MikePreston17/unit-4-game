@@ -53,3 +53,7 @@ h3,
     color: #eee;
     max-width: 150px;
 }
+
+#total-score {
+    width: 200px;
+}

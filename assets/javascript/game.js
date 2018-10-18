@@ -52,7 +52,7 @@ function init() {
 
 
 function setGoal() {
-    console.log('setGoal()', );
+    // console.log('setGoal()', );
     goal = randomInt(MIN_GOAL, MAX_GOAL, true);
     $('#goal').text(goal);
 }
@@ -73,30 +73,57 @@ function render() {
 }
 
 //Sample:  1-3, 5-7, 10-12
-//MUST BE RANDOM because we could get 19..20 as our range, which would not be good!
-//Eliminate repeats
-//Use the greedy alg to ensure some array of values CAN add up to the GOAL
+//TODO: Use the greedy alg to ensure some array of values CAN add up to the GOAL
+
+const min = 1;
+const max = 12;
+
+var values = range(1, 12);
+
 function generateDictionary() {
+
     if (!goal || goal == 0) setGoal();
 
     var result = Object.keys(gemDictionary);
-    var max, min;    
 
-    console.log('goal: ', goal);
-    do {
-        max = randomInt(range_min, range_max, false)
-        min = randomInt(range_min, range_max, true);
-        console.log(`possible gem values: (${min}..${max})`);
-    } while (max === min || min > max || max >= goal)
+    // console.log('goal: ', goal);
 
     //todo: make the min and max BELOW and never adding up to the cpuGuess.
+    var selected = [];
 
     result.forEach(key => {
-        gemDictionary[key] = randomInt(min, max, true);
+        let poppedIndex = randomInt(0, values.length - 1);
+        selected.push(values[poppedIndex]);
+        gemDictionary[key] = values[poppedIndex];
+        values.splice(poppedIndex, 1);
+        // console.log('values: ', values);
     })
 
-    var cookieIndex = randomInt(1, 4, false);
-    console.log('cookieindex: ', cookieIndex);
-    console.log('cookie :', gemDictionary[cookieIndex]);
-    console.log(gemDictionary);
+    console.log('adds up? ', addsUpTo(selected, goal));
+    // console.log(gemDictionary);
+}
+
+function range(start, end) {
+    return [...Array(1 + end - start).keys()].map(v => start + v)
+}
+
+//performs greedy algorithm
+function addsUpTo(values, goal) {
+
+    console.log('addup values: ', values);
+    if (goal === 0)
+        return true;
+
+    var max = Math.max(values)
+    var results = [];
+    console.log('max: ', max);
+
+    if (goal - max > 0) {
+        goal -= max;
+        results.push(max);
+    }
+
+    console.log('results: ', results);
+    //while goal > 0, subtract the largest number from goal iff the new result would still be > 0.  (Optional: Push that number to the result array.)
+    //When a number can no longer reduce the goal, pop it from the original array
 }
